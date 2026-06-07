@@ -2,418 +2,736 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>静态网页示例</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>数据结构选择题 · 完整1-111题（含图表）</title>
     <style>
-        /* 全局样式重置与基础设置 */
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
         }
-        
-        :root {
-            --primary: #4CAF50;
-            --primary-light: #81C784;
-            --primary-dark: #388E3C;
-            --text-dark: #333333;
-            --text-light: #666666;
-            --bg-light: #F5F5F5;
-            --white: #FFFFFF;
-            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
+
         body {
-            color: var(--text-dark);
-            line-height: 1.6;
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #f5f7fb;
+            transition: background 0.2s, color 0.2s;
+            padding: 0 12px 80px 12px;
+            min-height: 100vh;
         }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+
+        :root {
+            --bg: #f5f7fb;
+            --card-bg: #ffffff;
+            --text: #1e2a3e;
+            --text-secondary: #334e68;
+            --border: #e2e8f0;
+            --option-bg: #f1f5f9;
+            --option-hover: #e2e8f0;
+            --correct: #10b981;
+            --wrong: #ef4444;
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        
-        /* 导航栏样式 */
-        header {
-            background-color: var(--white);
-            box-shadow: var(--shadow);
+
+        body.dark {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #e2e8f0;
+            --text-secondary: #cbd5e1;
+            --border: #334155;
+            --option-bg: #334155;
+            --option-hover: #475569;
+            --correct: #34d399;
+            --wrong: #f87171;
+            --primary: #60a5fa;
+            --primary-dark: #3b82f6;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-bar {
             position: sticky;
             top: 0;
-            z-index: 100;
-        }
-        
-        .navbar {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            border-radius: 28px;
+            padding: 10px 18px;
+            margin: 12px 0 16px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-        
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background-color: var(--primary);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
+            flex-wrap: wrap;
+            gap: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
             font-weight: 500;
-            transition: color 0.3s ease;
+            z-index: 10;
         }
-        
-        .nav-links a:hover {
+
+        .stat-item {
+            background: var(--option-bg);
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            color: var(--text);
+        }
+
+        .stat-number {
+            font-weight: 700;
+            margin-left: 6px;
             color: var(--primary);
         }
-        
-        .cta-button {
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
+
+        .timer {
+            font-family: monospace;
+            letter-spacing: 1px;
         }
-        
-        .cta-button:hover {
-            background-color: var(--primary-dark);
-        }
-        
-        /* 移动端菜单按钮 */
-        .menu-toggle {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        /* 英雄区域样式 */
-        .hero {
-            background-color: var(--bg-light);
-            padding: 80px 0;
-            display: flex;
-            align-items: center;
-        }
-        
-        .hero-content {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 40px;
-        }
-        
-        .hero-text {
-            flex: 1 1 400px;
-        }
-        
-        .hero-image {
-            flex: 1 1 400px;
-        }
-        
-        .hero-image img {
-            width: 100%;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-        }
-        
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--text-dark);
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            max-width: 600px;
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        /* 特色区域样式 */
-        .features {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        
-        .section-title p {
-            color: var(--text-light);
-            max-width: 700px;
+
+        .quiz-container {
+            max-width: 650px;
             margin: 0 auto;
         }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background-color: var(--white);
-            padding: 30px;
-            border-radius: 10px;
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 32px;
+            padding: 24px 20px;
             box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .feature-icon {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
             margin-bottom: 20px;
-            color: white;
-            font-size: 1.5rem;
         }
-        
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
+
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text);
+            margin-bottom: 20px;
+            word-break: break-word;
         }
-        
-        .feature-card p {
-            color: var(--text-light);
+
+        .graph-container {
+            background: var(--option-bg);
+            border-radius: 20px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-size: 0.9rem;
         }
-        
-        /* 内容展示区样式 */
-        .content-section {
-            padding: 80px 0;
-            background-color: var(--bg-light);
-        }
-        
-        .content-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 40px;
-            align-items: center;
-        }
-        
-        .content-image {
-            flex: 1 1 400px;
-        }
-        
-        .content-image img {
+        .matrix-table {
+            border-collapse: collapse;
             width: 100%;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-        }
-        
-        .content-text {
-            flex: 1 1 400px;
-        }
-        
-        .content-text h2 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
-        
-        .content-text p {
-            color: var(--text-light);
-            margin-bottom: 20px;
-        }
-        
-        .content-list {
-            list-style-type: none;
-            margin-bottom: 30px;
-        }
-        
-        .content-list li {
-            margin-bottom: 10px;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .content-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-        
-        /* 统计数据区样式 */
-        .stats {
-            padding: 60px 0;
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
             text-align: center;
         }
-        
-        .stat-item h3 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .matrix-table th, .matrix-table td {
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            min-width: 40px;
         }
-        
-        .stat-item p {
-            opacity: 0.9;
+        .adj-list {
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 16px;
+            font-family: monospace;
         }
-        
-        /* 页脚样式 */
-        footer {
-            background-color: var(--text-dark);
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            background: var(--option-bg);
+            border-radius: 60px;
+            padding: 12px 18px;
+            font-size: 1rem;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option-prefix {
+            font-weight: 700;
+            background: var(--card-bg);
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .option-item.correct-highlight {
+            background: var(--correct);
             color: white;
-            padding: 60px 0 30px;
+            border-color: var(--correct);
         }
-        
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+        .option-item.correct-highlight .option-prefix {
+            background: rgba(255,255,255,0.3);
+            color: white;
         }
-        
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
+        .option-item.wrong-highlight {
+            background: var(--wrong);
+            color: white;
+            border-color: var(--wrong);
         }
-        
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 3px;
-            background-color: var(--primary);
+        .option-item.wrong-highlight .option-prefix {
+            background: rgba(255,255,255,0.3);
+            color: white;
         }
-        
-        .footer-column p {
-            color: #b3b3b3;
-            margin-bottom: 20px;
+
+        .explanation-area {
+            background: var(--option-bg);
+            border-radius: 24px;
+            padding: 14px 18px;
+            margin-top: 12px;
+            border-left: 4px solid var(--primary);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
         }
-        
-        .footer-links {
-            list-style-type: none;
-        }
-        
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-links a {
-            color: #b3b3b3;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
+        .explanation-title {
+            font-weight: 700;
+            margin-bottom: 6px;
             color: var(--primary);
         }
-        
-        .social-links {
+
+        .nav-buttons {
             display: flex;
-            gap: 15px;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 8px;
+            margin-bottom: 20px;
         }
+
+        .nav-btn {
+            flex: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 14px 0;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text);
+            cursor: pointer;
+            text-align: center;
+            transition: 0.2s;
+            box-shadow: var(--shadow);
+        }
+        .nav-btn:active { transform: scale(0.97);}
+        .nav-btn:hover { background: var(--option-hover);}
         
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background-color: #444;
+        .fab-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 20;
+        }
+        .fab-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 56px;
+            height: 56px;
+            border-radius: 56px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
+            transition: 0.2s;
         }
-        
-        .social-links a:hover {
-            background-color: var(--primary);
+        .fab-btn:active { transform: scale(0.94);}
+
+        .modal-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
         }
-        
-        .copyright {
+        .modal-mask.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 70%;
+            border-radius: 40px;
+            padding: 20px;
+            border: 1px solid var(--border);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .modal-header {
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text);
+        }
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+            gap: 12px;
+        }
+        .grid-item {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid #444;
-            color: #b3b3b3;
+            padding: 10px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            color: #1e293b;
         }
-        
-        /* 响应式设计调整 */
-        @media (max-width: 768px) {
-            .nav-links, .cta-button {
-                display: none;
-            }
-            
-            .menu-toggle {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .section-title h2, .content-text h2 {
-                font-size: 1.8rem;
-            }
-            
-            .hero, .features, .content-section {
-                padding: 60px 0;
-            }
+        body.dark .grid-item {
+            background: #334155;
+            color: #e2e8f0;
+        }
+        .grid-item.correct-status {
+            background: var(--correct);
+            color: white;
+            border-color: var(--correct);
+        }
+        .grid-item.wrong-status {
+            background: var(--wrong);
+            color: white;
+            border-color: var(--wrong);
+        }
+        .grid-item.unanswered-status {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+        body.dark .grid-item.unanswered-status {
+            background: #475569;
+            color: #f1f5f9;
+        }
+        .grid-item.current {
+            outline: 3px solid var(--primary);
+            transform: scale(1.02);
+        }
+
+        .dark-toggle {
+            background: var(--option-bg);
+            border: none;
+            border-radius: 40px;
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--text);
+            transition: 0.1s;
+        }
+
+        .question-progress {
+            font-size: 0.8rem;
+            background: var(--option-bg);
+            padding: 6px 12px;
+            border-radius: 60px;
+            color: var(--text);
+        }
+        @media (max-width: 500px) {
+            .question-text { font-size: 1.2rem; }
+            .stats-bar { flex-wrap: wrap; justify-content: center; }
+            .option-item { padding: 10px 14px; }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <a href="#" class="logo">
-                    <div class="logo-icon">L</div>
-                    <span>Leaf</span>
-                </a>
+<div class="quiz-container">
+    <div class="stats-bar">
+        <div class="stat-item">📋 已刷 <span id="answeredCount">0</span>/<span id="totalCount">111</span></div>
+        <div class="stat-item">✅ 正确 <span id="correctCount">0</span></div>
+        <div class="stat-item">❌ 错误 <span id="wrongCount">0</span></div>
+        <div class="stat-item timer">⏱️ <span id="timerDisplay">00:00</span></div>
+        <button class="dark-toggle" id="darkModeToggle">🌙 黑夜</button>
+    </div>
+
+    <div class="question-card">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+            <span class="question-progress" id="qIndexLabel">第1 / 111题</span>
+        </div>
+        <div class="question-text" id="questionText">加载中...</div>
+        <div id="graphContainer" class="graph-container" style="display: none;"></div>
+        <div class="options-list" id="optionsContainer"></div>
+        <div id="explanationBox" class="explanation-area" style="display: none;"></div>
+    </div>
+
+    <div class="nav-buttons">
+        <div class="nav-btn" id="prevBtn">◀ 上一题</div>
+        <div class="nav-btn" id="nextBtn">下一题 ▶</div>
+    </div>
+</div>
+
+<div class="fab-container">
+    <button class="fab-btn" id="jumpBtn">📋</button>
+    <button class="fab-btn" id="submitBtn">✓</button>
+</div>
+
+<div id="jumpModal" class="modal-mask">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span>📖 题目跳转</span>
+            <button class="close-modal" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="question-grid" id="questionGrid"></div>
+    </div>
+</div>
+
+<script>
+    // ======================= 完整1-111题数据 =======================
+    const QUESTIONS = [];
+    const extraGraphs = {};
+
+    function add(id, text, options, correctLetter, explanation, graphHtml = null) {
+        QUESTIONS.push({ id, text, options, correct: correctLetter, explanation });
+        if (graphHtml) extraGraphs[id] = graphHtml;
+    }
+
+    function extractOptionText(optStr) {
+        let match = optStr.match(/^[A-D][.\s、]*/);
+        if (match) return optStr.substring(match[0].length).trim();
+        return optStr;
+    }
+
+    // 绪论 1-6
+    add(1,"在数据结构中，从逻辑上可以把数据结构分成（ ）。",["A. 动态结构和静态结构","B. 紧凑结构和非紧凑结构","C. 线性结构和非线性结构","D. 内部结构和外部结构"],"C","逻辑结构分为线性与非线性。");
+    add(2,"与数据元素本身的形式、内容、相对位置、个数无关的是数据的（ ）。",["A. 存储结构","B. 存储实现","C. 逻辑结构","D. 运算实现"],"C","逻辑结构抽象无关具体存储。");
+    add(3,"通常要求同一逻辑结构中的所有数据元素具有相同的特性，这意味着（ ）。",["A. 数据具有同一特点","B. 不仅数据元素所包含的数据项的个数要相同，而且对应数据项的类型要一致","C. 每个数据元素都一样","D. 数据元素所包含的数据项的个数要相等"],"B","数据项结构一致。");
+    add(4,"以下说法正确的是（ ）。",["A. 数据元素是数据的最小单位","B. 数据项是数据的基本单位","C. 数据结构是带有结构的各数据项的集合","D. 一些表面上很不相同的数据可以有相同的逻辑结构"],"D","如树形结构可以表示不同场景。");
+    add(5,"算法的时间复杂度取决于（ ）。",["A. 问题的规模","B. 待处理数据的初态","C. 计算机的配置","D. A和B"],"D","规模和初态。");
+    add(6,"以下数据结构中，（ ）是非线性数据结构。",["A. 树","B. 字符串","C. 队列","D. 栈"],"A","树是非线性结构。");
+
+    // 线性表 7-21
+    add(7,"顺序表中第一个元素的存储地址是100，每个元素的长度为2，则第5个元素的地址是（ ）。",["A. 110","B. 108","C. 100","D. 120"],"B","100+4*2=108");
+    add(8,"在含n个结点的顺序表中，算法的时间复杂度是O(1)的操作是（ ）。",["A. 访问第i个结点和求第i个结点的直接前驱","B. 在第i个结点后插入一个新结点","C. 删除第i个结点","D. 将n个结点从小到大排序"],"A","随机存取O(1)。");
+    add(9,"在一个有127个元素的顺序表中插入一个新元素并保持原来顺序不变，平均要移动的元素个数为（ ）。",["A. 8","B. 63.5","C. 63","D. 7"],"C","平均移动n/2≈63.5 取整63。");
+    add(10,"链接存储的存储结构所占存储空间（ ）。",["A. 分为两部分，一部分存放结点值，另一部分存放表示结点间关系的指针","B. 只有一部分，存放结点值","C. 只有一部分，存放表示结点间关系的指针","D. 分为两部分，一部分存放结点值，另一部分存放结点所占单元数"],"A","节点包含数据域和指针域。");
+    add(11,"线性表若采用链式存储结构，要求内存中可用存储单元的地址（ ）。",["A. 必须是连续的","B. 部分地址必须是连续的","C. 一定是不连续的","D. 连续或不连续都可以"],"D","链表不要求连续。");
+    add(12,"线性表L在（ ）情况下适用于使用链式结构实现。",["A. 需经常修改L中的结点值","B. 需不断对L进行删除、插入","C. L中含有大量的结点","D. L中结点结构复杂"],"B","频繁插入删除适合链表。");
+    add(13,"单链表的存储密度（ ）。",["A. 大于1","B. 等于1","C. 小于1","D. 不能确定"],"C","指针占用空间，密度<1。");
+    add(14,"将两个各有n个元素的有序表归并成一个有序表，其最少的比较次数是（ ）。",["A. n","B. 2n-1","C. 2n","D. n-1"],"A","一个表完全小于另一个只需n次。");
+    add(15,"在一个长度为n的顺序表中，在第i个元素（1≤i≤n+1）之前插入一个新元素时需向后移动（ ）个元素。",["A. n-i","B. n-i+1","C. n-i-1","D. i"],"B","移动n-i+1个元素。");
+    add(16,"线性表L=(a1,a2,…,an)，下列陈述正确的是（ ）。",["A. 每个元素都有一个直接前驱和一个直接后继","B. 线性表中至少有一个元素","C. 表中诸元素的排列必须是由小到大或由大到小的","D. 除第一个和最后一个元素外，其余每个元素都有一个且仅有一个直接前驱和直接后继"],"D","线性表特点。");
+    add(17,"创建一个包括n个结点的有序单链表的时间复杂度是（ ）。",["A. O(1)","B. O(n)","C. O(n^2)","D. O(n log n)"],"C","每次插入需查找O(n^2)。");
+    add(18,"以下陈述错误的是（ ）。",["A. 求表长、定位这两种运算在采用顺序存储结构时实现的效率不比采用链式存储结构时实现的效率低","B. 顺序存储的线性表可以随机存取","C. 由于顺序存储要求连续的存储区域，因此在存储管理上不够灵活","D. 线性表的链式存储结构优于顺序存储结构"],"D","各有优劣。");
+    add(19,"在单链表中，要将s所指结点插入p所指结点之后，其语句应为（ ）。",["A. s->next = p+1; p->next = s;","B. (*p).next = s; (*s).next = (*p).next;","C. s->next = p->next; p->next = s->next;","D. s->next = p->next; p->next = s;"],"D","标准插入。");
+    add(20,"在双向链表存储结构中，删除p所指结点时修改指针的操作为（ ）。",["A. p->next->prior = p->prior; p->prior->next = p->next;","B. p->next = p->next->next; p->next->prior = p;","C. p->prior->next = p; p->prior = p->prior->prior;","D. p->prior = p->next->next; p->next = p->prior->prior;"],"A","双向链表删除。");
+    add(21,"在双向循环链表中，在p指针所指的结点后插入q所指向的新结点，其修改指针的操作是（ ）。",["A. p->next = q; q->prior = p; p->next->prior = q; q->next = q;","B. p->next = q; p->next->prior = q; q->prior = p; q->next = p->next;","C. q->prior = p; q->next = p->next; p->next->prior = q; p->next = q;","D. q->prior = p; q->next = p->next; p->next = q; p->next->prior = q;"],"C","正确顺序。");
+
+    // 栈队列 22-36
+    add(22,"若让元素1,2,3,4,5依次进栈，出栈次序不可能出现（ ）。",["A. 5,4,3,2,1","B. 2,1,5,4,3","C. 4,3,1,2,5","D. 2,3,5,4,1"],"C","4,3,1,2,5 中1出栈时2还在栈中，不可能。");
+    add(23,"若已知一个栈的入栈序列是1,2,3,...,n，其输出序列为p1,p2,...,pn，若p1=n，则pi为（ ）。",["A. i","B. n-i","C. n-i+1","D. 不确定"],"C","p1=n则输出逆序，pi=n-i+1。");
+    add(24,"一个循环队列，f为当前队列头元素的前一位置，r为队尾元素的位置，假定队列中元素的个数小于n，计算队列中元素个数的公式为（ ）。",["A. r-f","B. (n+f-r)%n","C. n+r-f","D. (n+r-f)%n"],"D","循环队列长度公式。");
+    add(25,"链式栈结点为(data,link)，top指向栈顶，若想删除栈顶结点，并将删除结点的值保存到x中，则应执行操作（ ）。",["A. x=top->data; top=top->link;","B. top=top->link; x=top->link;","C. x=top; top=top->link;","D. x=top->link;"],"A","标准出栈。");
+    add(26,"递归函数fact(n)调用次数为（ ）。",["A. n+1","B. n-1","C. n","D. n+2"],"A","n+1次调用。");
+    add(27,"栈在（ ）中有所应用。",["A. 递归调用","B. 函数调用","C. 表达式求值","D. 前三个选项都有"],"D","三者均使用栈。");
+    add(28,"为解决计算机主机与打印机间速度不匹配问题，通常设一个打印数据缓冲区。该缓冲区的逻辑结构应该是（ ）。",["A. 队列","B. 栈","C. 线性表","D. 有序表"],"A","先进先出队列。");
+    add(29,"设栈S和队列Q初始为空，e1~e6依次进栈，出栈即入队，出队序列e2,e4,e3,e6,e5,e1，则栈S的容量至少应该是（ ）。",["A. 2","B. 3","C. 4","D. 6"],"B","模拟得最小容量3。");
+    add(30,"若一个栈以向量V[1..n]存储，初始栈顶指针top设为n+1，则元素x进栈的正确操作是（ ）。",["A. top++; V[top]=x;","B. V[top]=x; top++;","C. top--; V[top]=x;","D. V[top]=x; top--;"],"C","高端栈顶。");
+    add(31,"设计一个判别表达式左中右括号是否配对出现的算法，采用（ ）数据结构最佳。",["A. 线性表的顺序存储结构","B. 队列","C. 线性表的链式存储结构","D. 栈"],"D","栈经典应用。");
+    add(32,"用链接方式存储的队列，在进行删除运算时（ ）。",["A. 仅修改头指针","B. 仅修改尾指针","C. 头、尾指针都要修改","D. 头、尾指针可能都要修改"],"D","若只剩一个元素，头尾均变。");
+    add(33,"循环队列存储在数组A[0..m]中，则入队时的操作为（ ）。",["A. rear=rear+1","B. rear=(rear+1)%(m-1)","C. rear=(rear+1)%m","D. rear=(rear+1)%(m+1)"],"D","数组长度m+1。");
+    add(34,"最大容量为n的循环队列，队尾指针是rear，队头指针是front，则队空的条件是（ ）。",["A. (rear+1)%n==front","B. rear==front","C. rear+1==front","D. (rear-1)%n==front"],"B","标准队空。");
+    add(35,"栈和队列的共同点是（ ）。",["A. 都是先进先出","B. 都是先进后出","C. 只允许在端点处插入和删除元素","D. 没有共同点"],"C","操作受限线性表。");
+    add(36,"一个递归算法必须包括（ ）。",["A. 递归部分","B. 终止条件和递归部分","C. 迭代部分","D. 终止条件和迭代部分"],"B","递归出口和递归体。");
+
+    // 串、数组、广义表 37-51
+    add(37,"串是一种特殊的线性表，其特殊性体现在（ ）。",["A. 可以采用顺序存储","B. 数据元素是单个字符","C. 可以采用链式存储","D. 数据元素可以是多个字符"],"B","串的元素为字符。");
+    add(38,"下列关于串的叙述中，不正确的是（ ）。",["A. 串是字符的有限序列","B. 空串是由空格构成的串","C. 模式匹配是串的一种重要运算","D. 串既可以采用顺序存储，也可以采用链式存储"],"B","空串不含字符。");
+    add(39,"串 \"ababaaababaa\" 的next数组为（ ）。",["A. 012345678999","B. 012121111212","C. 011234223456","D. 0123012322345"],"C","KMP next数组经典结果。");
+    add(40,"串 \"ababaabab\" 的nextval为（ ）。",["A. 010104101","B. 010102101","C. 010100011","D. 010101011"],"A","nextval优化数组。");
+    add(41,"串的长度是指（ ）。",["A. 串中所含不同字母的个数","B. 串中所含字符的个数","C. 串中所含不同字符的个数","D. 串中所含非空格字符的个数"],"B","字符总数。");
+    add(42,"二维数组A[1..100,1..100]行序为主序，基址10，每个元素2字节，LOC[5,5]=( )。",["A. 808","B. 818","C. 1010","D. 1020"],"B","10+((4*100)+4)*2=818。");
+    add(43,"数组A[1..8,1..10]列序存储，每个3字节，A[5,8]地址（ ）。",["A. BA+141","B. BA+180","C. BA+222","D. BA+225"],"B","列优先：( (8-1)*8 + (5-1) )*3=180。");
+    add(44,"10阶对称矩阵行序压缩，a11地址1，a88地址（ ）。",["A. 13","B. 32","C. 33","D. 40"],"C","下三角k=8*7/2+8=36，按常规定位33。");
+    add(45,"对称矩阵下三角B中a_{ij}(i<j)位置k（ ）。",["A. i*(i-1)/2+j","B. j*(j-1)/2+i","C. i*(i+1)/2+j","D. j*(j+1)/2+i"],"B","上三角对应下三角公式。");
+    add(46,"二维数组A[0..8,1..10]行序A[8,5]与列序某元素地址相同，该元素是（ ）。",["A. A[8,5]","B. A[3,10]","C. A[5,8]","D. A[0,9]"],"B","偏移计算得B。");
+    add(47,"二维数组A[1..m,1..n]行序B[1..m*n]中A[i,j]下标（ ）。",["A. (i-1)*n+j","B. (i-1)*n+j-1","C. i*(j-1)","D. j*m+i-1"],"A","行优先公式。");
+    add(48,"数组A[0..4,-1..-3,5..7]元素个数（ ）。",["A. 55","B. 45","C. 36","D. 16"],"B","各维长度5,3,3 =>45。");
+    add(49,"广义表A=(a,b,(c,d),(e,(f,g))), Head(Tail(Head(Tail(Tail(A))))) 值为（ ）。",["A. (g)","B. (d)","C. c","D. d"],"D","逐步取头尾得到d。");
+    add(50,"广义表((a,b,c,d))的表头和表尾是（ ）。",["A. a","B. ()","C. (a,b,c,d)","D. (b,c,d)"],"C,B","表头为子表，表尾为空。");
+    add(51,"广义表L=((a,b,c)), 长度和深度（ ）。",["A. 1和1","B. 1和3","C. 1和2","D. 2和3"],"C","长度1，深度2。");
+
+    // 树 52-66
+    add(52,"把一棵树转换为二叉树后，这棵二叉树的形态（ ）。",["A. 是唯一的","B. 有多种","C. 根结点都没有左孩子","D. 根结点都没有右孩子"],"A","孩子兄弟表示法唯一。");
+    add(53,"由3个结点可以构造出多少种不同的二叉树？（ ）",["A. 2","B. 3","C. 4","D. 5"],"D","卡特兰数C3=5。");
+    add(54,"一棵完全二叉树上有1001个结点，其中叶子结点的个数是（ ）。",["A. 250","B. 254","C. 500","D. 501"],"D","n0=floor((n+1)/2)=501。");
+    add(55,"一个具有1025个结点的二叉树的高h为（ ）。",["A. 10","B. 11","C. 11~1025","D. 10~1024"],"C","最小高11，最大单支1025。");
+    add(56,"深度为h的满m叉树的第k层有（ ）个结点。",["A. m^{k-1}","B. m^{k-1}","C. m^{h-1}","D. m^{h-1}"],"A","满m叉树第k层m^{k-1}。");
+    add(57,"利用二叉链表存储树，则根结点的右指针（ ）。",["A. 指向最左孩子","B. 指向最右孩子","C. 为空","D. 非空"],"C","根无右兄弟。");
+    add(58,"对二叉树连续编号，每个结点编号大于孩子，左孩子小于右孩子，采用（ ）遍历。",["A. 先序","B. 中序","C. 后序","D. 层次"],"C","后序保证子先父后。");
+    add(59,"在一棵度为4的树T中，若有20个度为4的结点，10个度为3，1个度为2，10个度为1，则叶子结点个数是（ ）。",["A. 41","B. 82","C. 113","D. 122"],"B","总度数+1=结点数，解得叶子82。");
+    add(60,"在下列存储结构表示法中，（ ）不是树的存储结构表示法。",["A. 双亲表示法","B. 孩子链表表示法","C. 孩子兄弟表示法","D. 顺序存储表示法"],"D","顺序存储非专用树表示。");
+    add(61,"一棵非空的二叉树的先序遍历与后序遍历序列正好相反，则该二叉树一定满足（ ）。",["A. 所有的结点均无左孩子","B. 所有的结点均无右孩子","C. 只有一个叶子结点","D. 是任意一棵二叉树"],"C","只有单支且叶子唯一。");
+    add(62,"设哈夫曼树中有199个结点，则该哈夫曼树中有（ ）个叶子结点。",["A. 99","B. 100","C. 101","D. 102"],"B","总结点=2n0-1 => n0=100。");
+    add(63,"若X是二叉中序线索树中一个有左孩子的结点，且X不为根，则X的前驱为（ ）。",["A. X的双亲","B. X的右子树中最左的结点","C. X的左子树中最右的结点","D. X的左子树中最右的叶子结点"],"C","中序前驱为左子树最右结点。");
+    add(64,"引入二叉线索树的目的是（ ）。",["A. 加快查找结点的前驱或后继的速度","B. 为了能在二叉树中方便地进行插入与删除","C. 为了能方便地找到双亲","D. 使二叉树的遍历结果唯一"],"A","线索化便于遍历。");
+    add(65,"设F是森林，B是由F变换而得的二叉树。若F中有n个非终端结点，则B中右指针域为空的结点有（ ）个。",["A. n-1","B. n","C. n+1","D. n+2"],"C","右空指针数=n+1。");
+    add(66,"在并查集的查找过程中做路径压缩，采用这种方法，查找的时间复杂度为（ ），合并的时间复杂度为（ ）。",["A. O(1) O(logn)","B. O(logn) O(1)","C. O(n) O(1)","D. O(1) O(n)"],"B","均摊接近O(α)近似O(logn)与O(1)。");
+
+    // 图 67-81，图表题
+    add(67,"在一个无向图中，所有顶点的度数之和等于图的边数的（ ）倍。",["A. 1/2","B. 1","C. 2","D. 4"],"C","握手定理2倍。");
+    add(68,"在一个有向图中，所有顶点的入度之和等于所有顶点的出度之和的（ ）倍。",["A. 1/2","B. 1","C. 2","D. 4"],"B","入度=出度=边数。");
+    add(69,"具有n个顶点的有向图最多有（ ）条边。",["A. n","B. n(n-1)","C. n(n+1)","D. n^2"],"B","完全有向图n(n-1)。");
+    add(70,"n个顶点的连通图用邻接矩阵表示时，该矩阵至少有（ ）个非零元素。",["A. n","B. 2(n-1)","C. n/2","D. n^2"],"B","连通最少n-1条边，对称矩阵2(n-1)。");
+    add(71,"G是一个非连通无向图，共有28条边，则该图至少有（ ）个顶点。",["A. 7","B. 8","C. 9","D. 10"],"C","9个顶点完全图36边，8顶点完全图28边，非连通至少9。");
+    add(72,"若从无向图的任意一个顶点出发进行一次深度优先搜索可以访问图中所有的顶点，则该图一定是（ ）图。",["A. 非连通","B. 连通","C. 强连通","D. 有向"],"B","无向连通图。");
+    add(73,"下面（ ）适合构造一个稠密图G的最小生成树。",["A. 普里姆算法","B. 克鲁斯卡尔算法","C. 弗洛伊德算法","D. 迪杰斯特拉算法"],"A","普里姆适合稠密图。");
+    add(74,"用邻接表表示图进行广度优先遍历时，通常可借助（ ）来实现算法。",["A. 栈","B. 队列","C. 树","D. 图"],"B","BFS用队列。");
+    add(75,"用邻接表表示图进行深度优先遍历时，通常可借助（ ）来实现算法。",["A. 栈","B. 队列","C. 树","D. 图"],"A","DFS用栈。");
+    add(76,"图的深度优先遍历类似于二叉树的（ ）。",["A. 先序遍历","B. 中序遍历","C. 后序遍历","D. 层次遍历"],"A","类似先根。");
+    add(77,"图的广度优先遍历类似于二叉树的（ ）。",["A. 先序遍历","B. 中序遍历","C. 后序遍历","D. 层次遍历"],"D","类似层序。");
+    add(78,"图的BFS生成树的树高比DFS生成树的树高（ ）。",["A. 小","B. 大","C. 小或相等","D. 大或相等"],"C","BFS树高较小或相等。");
+
+    const matrix79 = `<div style="font-weight:600; margin-bottom:10px;">📊 图6.32 邻接矩阵</div>
+<table class="matrix-table">
+<tr><th></th><th>v0</th><th>v1</th><th>v2</th><th>v3</th><th>v4</th><th>v5</th><th>v6</th></tr>
+<tr><th>v0</th><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>v1</th><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>v2</th><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>v3</th><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+<tr><th>v4</th><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>v5</th><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>v6</th><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+</table>`;
+    add(79,"已知图的邻接矩阵如图6.32所示，则从顶点v0出发按深度优先遍历的结果是（ ）。",["A. 0243156","B. 0136542","C. 0134526","D. 0361542"],"C","手动DFS从v0出发可得序列0134526。", matrix79);
+
+    const adjList80 = `<div style="font-weight:600; margin-bottom:10px;">📊 图6.33 邻接表</div>
+<div class="adj-list">
+0 : v0 → v1 → v2<br>
+1 : v1 → v0 → v3<br>
+2 : v2 → v0 → v3<br>
+3 : v3 → v1 → v2
+</div>`;
+    add(80,"已知图的邻接表如图6.33所示，则从v0出发广度优先遍历的结果是（ ），深度优先遍历的结果是（ ）。",["A. 0 1 3 2 / 0 1 2 3","B. 0 2 3 1 / 0 2 3 1","C. 0 3 2 1 / 0 3 2 1","D. 0 1 2 3 / 0 1 2 3"],"A","BFS:0,1,3,2；DFS:0,1,2,3。", adjList80);
+
+    add(81,"下面的（ ）方法可以判断出一个有向图是否有环。",["A. 求最小生成树","B. 拓扑排序","C. 求最短路径","D. 求关键路径"],"B","拓扑排序可检测环。");
+
+    // 查找 82-96
+    add(82,"对包含n个元素的表进行顺序查找，查找每个元素概率相同，平均查找长度为（ ）。",["A. (n-1)/2","B. n/2","C. (n+1)/2","D. n"],"C","(n+1)/2。");
+    add(83,"适用于折半查找的表的存储方式及元素排列要求为（ ）。",["A. 链接方式存储，元素无序","B. 链接方式存储，元素有序","C. 顺序方式存储，元素无序","D. 顺序方式存储，元素有序"],"D","顺序且有序。");
+    add(84,"如果要求一个线性表既能较快地查找，又能适应动态变化的要求，最好采用（ ）。",["A. 顺序查找","B. 折半查找","C. 分块查找","D. 哈希查找"],"C","分块查找索引块。");
+    add(85,"折半查找有序表(4,6,10,12,20,30,50,70,88,100)，查找58依次与（ ）比较。",["A. 20,70,30,50","B. 30,88,70,50","C. 20,50","D. 30,88,50"],"A","依次与20,70,30,50比较。");
+    add(86,"对22个记录的有序表进行折半查找，当查找失败时，至少需要比较（ ）次关键字。",["A. 3","B. 4","C. 5","D. 6"],"C","最坏5次。");
+    add(87,"折半查找与二叉排序树的时间性能（ ）。",["A. 相同","B. 完全不同","C. 有时不相同","D. 数量级都是O(logn)"],"D","平均O(logn)。");
+    add(88,"分别以下列序列构造二叉排序树，与用其他3个序列所构造的结果不同的是（ ）。",["A. (100,80,90,60,120,110,130)","B. (100,120,110,130,80,60,90)","C. (100,60,80,90,120,110,130)","D. (100,80,60,90,120,130,110)"],"C","C构造结果不同。");
+    add(89,"在平衡二叉树中插入结点后不平衡，设最低不平衡结点A，A的左孩子平衡因子0，右孩子平衡因子1，则应作（ ）调整。",["A. LL","B. LR","C. RL","D. RR"],"C","RL型双旋。");
+    add(90,"下列关于m阶B-树的说法错误的是（ ）。",["A. 根结点至多有m棵子树","B. 所有叶子都在同一层次上","C. 非叶子结点至少有m/2（m为偶数）或m/2+1（m为奇数）棵子树","D. 根结点中的数据是有序的"],"D","根结点数据不一定有序。");
+    add(91,"下面关于B-和B+树的叙述中，不正确的是（ ）。",["A. B-树和B+树都是平衡的多叉树","B. B-树和B+树都可用于文件的索引结构","C. B-树和B+树都能有效地支持顺序检索","D. B-树和B+树都能有效地支持随机检索"],"C","B+树支持顺序检索，B-树主要支持随机。");
+    add(92,"m阶B-树是一棵（ ）。",["A. m叉排序树","B. m叉平衡排序树","C. m-1叉平衡排序树","D. m+1叉平衡排序树"],"B","平衡m路查找树。");
+    add(93,"下面关于散列查找的说法，正确的是（ ）。",["A. 散列函数构造得越复杂越好","B. 除留余数法是所有散列函数中最好的","C. 不存在特别好与特别坏的散列函数，要视情况而定","D. 散列表的平均查找长度有时也和记录总数有关"],"C","哈希函数需根据数据选择。");
+    add(94,"下面关于散列查找的说法，不正确的是（ ）。",["A. 采用链地址法处理冲突时，查找任何一个元素的时间都相同","B. 采用链地址法处理冲突时，若规定插入总是在链首，则插入任一个元素的时间是相同的","C. 用链地址法处理冲突，不会引起二次聚集现象","D. 用链地址法处理冲突，适合表长不确定的情况"],"A","查找时间因链表长度而异。");
+    add(95,"设散列表长为14，散列函数H(key)=key%11，已有数据15,38,61,84，将49用二次探测法解决冲突，放入的位置是（ ）。",["A. 3","B. 5","C. 8","D. 9"],"D","49%11=5冲突，探测+1^2得9空闲。");
+    add(96,"假设将一棵红黑树的每一个红色结点“吸收”到它的黑色父结点中，则吸收后黑色结点可能的度为（ ）。",["A. 1 2 3","B. 2 3 4","C. 3 4 5","D. 1 2 4"],"B","吸收后度可为2,3,4。");
+
+    // 排序 97-111
+    add(97,"从未排序序列中依次取出元素与已排序序列中的元素比较，放入正确位置，称为（ ）。",["A. 归并排序","B. 冒泡排序","C. 插入排序","D. 选择排序"],"C","直接插入排序。");
+    add(98,"从未排序序列中挑选元素，并依次插入已排序序列末端的方法，称为（ ）。",["A. 归并排序","B. 冒泡排序","C. 插入排序","D. 选择排序"],"D","简单选择排序。");
+    add(99,"对n个不同的关键字由小到大进行冒泡排序，比较次数最多的初始状态是（ ）。",["A. 元素从小到大排列好","B. 元素从大到小排列好","C. 元素无序","D. 元素基本有序"],"B","逆序比较次数最多。");
+    add(100,"对n个不同的排序码进行冒泡排序，在元素无序的情况下比较的次数为（ ）。",["A. n+1","B. n","C. n-1","D. n(n-1)/2"],"D","总是n(n-1)/2。");
+    add(101,"快速排序在下列（ ）的情况下最易发挥其长处。",["A. 被排序的数据中含有多个相同排序码","B. 被排序的数据已基本有序","C. 被排序的数据完全无序","D. 被排序的数据中的最大值和最小值相差悬殊"],"C","完全无序时划分均衡。");
+    add(102,"对n个关键字进行快速排序，在最坏情况下，算法的时间复杂度是（ ）。",["A. O(n)","B. O(n^2)","C. O(n log n)","D. O(n^3)"],"B","退化为O(n^2)。");
+    add(103,"若一组记录的排序码为(46,79,56,38,40,84)，利用快速排序以第一个记录为基准得到的一次划分结果为（ ）。",["A. 38,40,46,56,79,84","B. 40,38,46,79,56,84","C. 40,38,46,56,79,84","D. 40,38,46,84,56,79"],"C","经典划分得C。");
+    add(104,"下列关键字序列中，（ ）是堆。",["A. 16,72,31,23,94,53","B. 94,23,31,72,16,53","C. 16,53,23,94,31,72","D. 16,23,53,31,94,72"],"D","大根堆成立。");
+    add(105,"堆是一种（ ）排序。",["A. 插入","B. 选择","C. 交换","D. 归并"],"B","堆排序是选择排序。");
+    add(106,"堆的形状是一棵（ ）。",["A. 二叉排序树","B. 满二叉树","C. 完全二叉树","D. 平衡二叉树"],"C","完全二叉树。");
+    add(107,"若一组记录的排序码为(46,79,56,38,40,84)，则利用堆排序建立的初始堆为（ ）。",["A. 79,46,56,38,40,84","B. 84,79,56,38,40,46","C. 84,79,56,46,40,38","D. 84,56,79,40,46,38"],"B","建堆结果B。");
+    add(108,"下述几种排序方法中，要求内存最大的是（ ）。",["A. 希尔排序","B. 快速排序","C. 归并排序","D. 堆排序"],"C","归并需要O(n)额外空间。");
+    add(109,"下述几种排序方法中，（ ）是稳定的排序方法。",["A. 希尔排序","B. 快速排序","C. 归并排序","D. 堆排序"],"C","归并排序稳定。");
+    add(110,"数据表中有10000个元素，如果仅要求求出其中最大的10个元素，则采用（ ）算法最节省时间。",["A. 冒泡排序","B. 快速排序","C. 简单选择排序","D. 堆排序"],"D","堆排序部分取top K。");
+    add(111,"下列排序算法中，不能保证每趟排序至少能将一个元素放到其最终的位置上的排序方法是（ ）。",["A. 希尔排序","B. 快速排序","C. 冒泡排序","D. 堆排序"],"A","希尔排序不稳定。");
+
+    if(QUESTIONS.length !== 111) console.error("题目数量错误", QUESTIONS.length);
+    document.getElementById("totalCount").innerText = QUESTIONS.length;
+
+    // ------------------- 页面逻辑 -------------------
+    let currentIdx = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let startTime = null;
+    let timerInterval = null;
+
+    const qTextSpan = document.getElementById("questionText");
+    const optionsDiv = document.getElementById("optionsContainer");
+    const explanationBox = document.getElementById("explanationBox");
+    const graphContainer = document.getElementById("graphContainer");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const jumpBtn = document.getElementById("jumpBtn");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const jumpModal = document.getElementById("jumpModal");
+    const questionGrid = document.getElementById("questionGrid");
+    const answeredSpan = document.getElementById("answeredCount");
+    const correctSpan = document.getElementById("correctCount");
+    const wrongSpan = document.getElementById("wrongCount");
+    const timerSpan = document.getElementById("timerDisplay");
+    const qIndexLabel = document.getElementById("qIndexLabel");
+    const darkToggle = document.getElementById("darkModeToggle");
+
+    function startTimerOnFirstAction() {
+        if(startTime === null) {
+            startTime = Date.now();
+            if(timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(()=>{
+                if(startTime) {
+                    let elapsed = Math.floor((Date.now() - startTime)/1000);
+                    let mins = Math.floor(elapsed/60);
+                    let secs = elapsed % 60;
+                    timerSpan.innerText = `${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`;
+                }
+            }, 1000);
+        }
+    }
+
+    function updateStatsUI() {
+        let answered = userAnswers.filter(a => a !== null).length;
+        let correct = 0, wrong = 0;
+        for(let i=0;i<QUESTIONS.length;i++){
+            if(userAnswers[i] !== null){
+                if(userAnswers[i] === QUESTIONS[i].correct) correct++;
+                else wrong++;
+            }
+        }
+        answeredSpan.innerText = answered;
+        correctSpan.innerText = correct;
+        wrongSpan.innerText = wrong;
+        if(jumpModal.classList.contains('active')) renderJumpGrid();
+    }
+
+    function renderCurrentQuestion() {
+        const q = QUESTIONS[currentIdx];
+        qTextSpan.innerText = `${currentIdx+1}. ${q.text}`;
+        if(extraGraphs[q.id]) {
+            graphContainer.style.display = "block";
+            graphContainer.innerHTML = extraGraphs[q.id];
+        } else {
+            graphContainer.style.display = "none";
+            graphContainer.innerHTML = "";
+        }
+        const selected = userAnswers[currentIdx];
+        const isCorrectSelected = (selected === q.correct);
+        const optsHtml = q.options.map((opt, idx) => {
+            const letter = String.fromCharCode(65+idx);
+            let highlightClass = "";
+            if(selected === letter) {
+                if(isCorrectSelected) highlightClass = "correct-highlight";
+                else highlightClass = "wrong-highlight";
+            }
+            const optText = extractOptionText(opt);
+            return `<div class="option-item ${highlightClass}" data-opt="${letter}">
+                        <span class="option-prefix">${letter}</span>
+                        <span>${optText}</span>
+                    </div>`;
+        }).join('');
+        optionsDiv.innerHTML = optsHtml;
+        if(selected !== null && selected !== q.correct){
+            explanationBox.style.display = "block";
+            explanationBox.innerHTML = `<div class="explanation-title">📖 正确答案：${q.correct}</div><div>${q.explanation}</div>`;
+        } else {
+            explanationBox.style.display = "none";
+        }
+        qIndexLabel.innerText = `第${currentIdx+1} / ${QUESTIONS.length}题`;
+        document.querySelectorAll('.option-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                const chosenLetter = el.getAttribute('data-opt');
+                if(userAnswers[currentIdx] !== null) return;
+                if(startTime === null) startTimerOnFirstAction();
+                userAnswers[currentIdx] = chosenLetter;
+                updateStatsUI();
+                renderCurrentQuestion();
+                if(chosenLetter === QUESTIONS[currentIdx].correct && currentIdx+1 < QUESTIONS.length){
+                    setTimeout(() => { currentIdx++; renderCurrentQuestion(); }, 280);
+                }
+            });
+        });
+    }
+
+    function goPrev(){ if(currentIdx>0){ currentIdx--; renderCurrentQuestion(); } else alert("已是第一题"); }
+    function goNext(){ if(currentIdx<QUESTIONS.length-1){ currentIdx++; renderCurrentQuestion(); } else alert("已是最后一题"); }
+    function checkAllAnswered(){
+        const unanswered = [];
+        for(let i=0;i<QUESTIONS.length;i++) if(userAnswers[i]===null) unanswered.push(i+1);
+        if(unanswered.length) alert(`还有 ${unanswered.length} 题未答: ${unanswered.join(',')}`);
+        else alert(`🎉 恭喜完成！正确:${correctSpan.innerText} 错误:${wrongSpan.innerText}`);
+    }
+
+    function renderJumpGrid(){
+        if(!questionGrid) return;
+        questionGrid.innerHTML = "";
+        for(let i=0;i<QUESTIONS.length;i++){
+            const ans = userAnswers[i];
+            let statusClass = "unanswered-status";
+            if(ans !== null) {
+                if(ans === QUESTIONS[i].correct) statusClass = "correct-status";
+                else statusClass = "wrong-status";
+            }
+            const isCurrent = (i === currentIdx);
+            const div = document.createElement("div");
+            div.className = `grid-item ${statusClass} ${isCurrent ? 'current' : ''}`;
+            div.innerText = i+1;
+            div.addEventListener("click",()=>{
+                currentIdx = i;
+                renderCurrentQuestion();
+                jumpModal.classList.remove("active");
+            });
+            questionGrid.appendChild(div);
+        }
+    }
+
+    // 普通黑夜切换（无彩蛋）
+    darkToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        darkToggle.innerText = document.body.classList.contains("dark") ? "☀️ 白天" : "🌙 黑夜";
+    });
+
+    prevBtn.addEventListener("click", goPrev);
+    nextBtn.addEventListener("click", goNext);
+    submitBtn.addEventListener("click", checkAllAnswered);
+    jumpBtn.addEventListener("click", ()=>{ renderJumpGrid(); jumpModal.classList.add("active"); });
+    closeModalBtn.addEventListener("click", ()=> jumpModal.classList.remove("active"));
+    jumpModal.addEventListener("click", (e)=>{ if(e.target === jumpModal) jumpModal.classList.remove("active"); });
+
+    renderCurrentQuestion();
+    updateStatsUI();
+</script></脚本>
+</body>
+</html>>
                 
                 <div class="nav-links">
                     <a href="#">首页</a>
